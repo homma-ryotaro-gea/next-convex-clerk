@@ -1,25 +1,25 @@
-"use client";
-import { SignInButton, UserButton } from "@clerk/nextjs";
-import { Authenticated, Unauthenticated, useQuery } from "convex/react";
-import { api } from "../../convex/_generated/api";
+import { currentUser } from "@clerk/nextjs/server";
 
-export default function Home() {
+import Header from "@/components/Header";
+
+const HomePage = async () => {
+  const user = await currentUser();
+  const userInfo = {
+    imageUrl: user?.imageUrl,
+    email: user?.emailAddresses[0].emailAddress,
+    name: user?.fullName,
+    id: user?.id,
+  };
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Authenticated>
-          <UserButton />
-          <Content />
-        </Authenticated>
-        <Unauthenticated>
-          <SignInButton />
-        </Unauthenticated>
+    <div>
+      <Header userInfo={userInfo} />
+      <main className="mt-10">
+        <h1 className="text-center text-4xl font-bold">
+          Welcome to the Home Page
+        </h1>
       </main>
     </div>
   );
-}
+};
 
-function Content() {
-  const messages = useQuery(api.messages.getForCurrentUser);
-  return <div>Authenticated content: {messages?.length}</div>;
-}
+export default HomePage;
