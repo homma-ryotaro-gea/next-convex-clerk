@@ -11,7 +11,6 @@ import { Skeleton } from "./ui/skeleton";
 type PropsType = {
   userInfo: {
     imageUrl: string | undefined;
-    email: string | undefined;
     name: string | null | undefined;
     id: string | undefined;
   };
@@ -19,6 +18,7 @@ type PropsType = {
 
 const Header = (props: PropsType) => {
   const { userInfo } = props;
+  console.log("userInfo", userInfo);
   return (
     <div>
       <nav className="h-16 bg-background border-b">
@@ -33,11 +33,13 @@ const Header = (props: PropsType) => {
             </AuthLoading>
             <Authenticated>
               <UserInfo userInfo={userInfo} />
-              {/* <UserButton /> */}
             </Authenticated>
             <Unauthenticated>
               <SignInButton>
-                <Button variant="outline" className="hidden sm:inline-flex">
+                <Button
+                  variant="outline"
+                  className="hidden sm:inline-flex cursor-pointer"
+                >
                   Sign In
                 </Button>
               </SignInButton>

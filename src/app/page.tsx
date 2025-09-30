@@ -6,7 +6,6 @@ const HomePage = async () => {
   const user = await currentUser();
   const userInfo = {
     imageUrl: user?.imageUrl,
-    email: user?.emailAddresses[0].emailAddress,
     name: user?.fullName,
     id: user?.id,
   };
